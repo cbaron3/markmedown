@@ -1,5 +1,11 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat");
+
 .App {
   text-align: center;
+}
+
+body {
+  background-image: url("./random_grey_variations_@2X.png");
 }
 
 .App-logo {
@@ -36,3 +42,47 @@
     transform: rotate(360deg);
   }
 }
+
+h1 {
+  color: white;
+  font-size: 7vw;
+  font-family: "Montserrat";
+}
+
+p {
+  color: white;
+  font-size: 2vw;
+  font-weight: lighter;
+  font-family: "Montserrat";
+}
+
+dl,
+dt,
+dd {
+  color: white;
+  font-size: 2vw;
+  font-weight: normal;
+  float: right;
+}
+
+/* html {
+  font-size: 1rem;
+}
+
+@include media-breakpoint-up(sm) {
+  html {
+    font-size: 1.2rem;
+  }
+}
+
+@include media-breakpoint-up(md) {
+  html {
+    font-size: 1.4rem;
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  html {
+    font-size: 1.6rem;
+  }
+} */
