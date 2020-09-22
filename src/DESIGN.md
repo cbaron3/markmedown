@@ -1,3 +1,6 @@
+Commit current folder structure to master then start working on each set of components
+in feature branches
+
 # Components
 
 # Break this into Notion task planning board
