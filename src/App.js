@@ -23,15 +23,25 @@ const StyledContainer = styled.div `
 `;
 
 const StyledHeader = styled.header `
-  background: lightpink;
-  padding: 1rem;
+  background: #494D5F;
+  color: white;
+  font-size: 30px;
+  font-weight: 600;
+  padding-top: 5px;
+  padding-left: 1.4rem;
   text-align: left;
   grid-column: 1 / 4;
 `;
 
 const StyledFooter = styled.header `
-  background: wheat;
-  padding: 1rem;
+  background: #494D5F;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 13px;
+  font-weight: 300;
+  font-style: italic;
   text-align: center;
   grid-column: 1 / 4;
 `;
@@ -156,7 +166,7 @@ export default class App extends Component {
   render() {
     return (
       <StyledContainer>
-        <StyledHeader>Header.com</StyledHeader>
+        <StyledHeader>Markmedown ------------------------------------------------- Build your README</StyledHeader>
         <LeftContent>Introduction</LeftContent>
         <MiddleContent>
           <TopMiddleContent>
@@ -207,7 +217,7 @@ export default class App extends Component {
             }
             </div>  
         </RightContent>
-        <StyledFooter>Footer Content — Header.com 2020</StyledFooter>
+        <StyledFooter>Made by Carl Baron</StyledFooter>
       </StyledContainer>
     );
   }
