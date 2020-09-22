@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+import React, { Component }
+from "react";
 import styled from "styled-components";
 import "./App.css";
 
@@ -7,44 +8,51 @@ import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-markdown";
 import "ace-builds/src-noconflict/theme-monokai";
 import "ace-builds/src-noconflict/theme-textmate";
+import "ace-builds/src-noconflict/theme-dracula";
+import "ace-builds/src-noconflict/theme-nord_dark";
 
 import unified from "unified";
 import parse from "remark-parse";
 import remark2react from "remark-react";
 
-const StyledContainer = styled.div`
+const StyledContainer = styled.div `
   font-family: "Montserrat", sans-serif;
   display: grid;
   height: 100vh;
   grid-template: 50px 1fr 50px / 1fr 1fr 1fr;
 `;
 
-const StyledHeader = styled.header`
+const StyledHeader = styled.header `
   background: lightpink;
   padding: 1rem;
   text-align: left;
   grid-column: 1 / 4;
 `;
 
-const StyledFooter = styled.header`
+const StyledFooter = styled.header `
   background: wheat;
   padding: 1rem;
   text-align: center;
   grid-column: 1 / 4;
 `;
 
-const Content = styled.div`
+const Content = styled.div `
 
 border: 2px solid #1C6EA4;
 `;
 
-const LeftContent = styled(Content)`
-  padding: 1rem;
-  background: lightblue;
+const LeftContent = styled(Content) `
+  
+  background: white;
   grid-column: 1 / 2;
+  
+  font-size: 32px;
+  font-weight: 900;
+  padding-top: 1.4rem;
+  padding-left: 1.4rem;
 `;
 
-const MiddleContent = styled(Content)`
+const MiddleContent = styled(Content) `
   background: white;
 
   grid-column: 2 / 3;
@@ -53,23 +61,30 @@ const MiddleContent = styled(Content)`
   flex-direction:column;
 `;
 
-const RightContent = styled(Content)`
+const RightContent = styled(Content) `
+  padding-left: 1.4rem;
+
   background: white;
   grid-column: 3 / 4;
+
+  display:flex;
+  flex-direction:column;
+
+  overflow-y: scroll
 `;
 
-const TopMiddleContent = styled.div`
+const TopMiddleContent = styled.div `
   border-bottom: 2px solid #1C6EA4;
   height: 50px ;
 `;
 
-const EditorHeader = styled.p`
+const EditorHeader = styled.p `
   padding-left: 1.4rem;
 `;
 
-const BottomMiddleContent = styled.div`
+const BottomMiddleContent = styled.div `
   flex:1;
-  background: red;
+  padding: -10px;
 `;
 
 
@@ -96,26 +111,22 @@ const BottomMiddleContent = styled.div`
 // 1. This is a list
 // 2. Second list element
 
-// 
+//
 // # Hello this is a header
-// 
+//
 // Need file explorer on the left side for when images get added
-// 
-// 
+//
+//
 // ### Capture CTRL+s cause programmers love that
 
 // REMOVE HOME SCREEN, IT WILL JUST BE A POP UP ON THE WEBSITE BEFORE STARTING
 
 export default class App extends Component {
-  onLoad() {
-    console.log("i've loaded");
-  }
+  onLoad() { console.log("i've loaded"); }
 
   onChange(newValue) {
     console.log("change", newValue);
-    this.setState({
-      value: newValue
-    });
+    this.setState({value: newValue});
   }
 
   onSelectionChange(newValue, event) {
@@ -128,15 +139,12 @@ export default class App extends Component {
     console.log("cursor-change-event", event);
   }
 
-  onValidate(annotations) {
-    console.log("onValidate", annotations);
-  }
+  onValidate(annotations) { console.log("onValidate", annotations); }
 
   constructor(props) {
     super(props);
-    this.state = {
-      value: ""
-    }
+    this.state =
+    { value: "" }
 
     this.onChange = this.onChange.bind(this);
     this.onLoad = this.onLoad.bind(this);
@@ -149,7 +157,7 @@ export default class App extends Component {
     return (
       <StyledContainer>
         <StyledHeader>Header.com</StyledHeader>
-        <LeftContent>Left contents</LeftContent>
+        <LeftContent>Introduction</LeftContent>
         <MiddleContent>
           <TopMiddleContent>
             <EditorHeader>README.md</EditorHeader>
@@ -158,8 +166,6 @@ export default class App extends Component {
           <AceEditor
             placeholder={"Markdown text editor..."}
             defaultValue={""}
-
-            // Editor fills container
             height={"100%"}
             width={"100%"}
 
@@ -192,15 +198,14 @@ export default class App extends Component {
           </BottomMiddleContent>
         </MiddleContent>
         <RightContent>
-          {/* FILE NEEDS A HEADER WITH README.md */}
-          <div id="preview">
+            <div>
             {
               unified()
                 .use(parse)
                 .use(remark2react)
                 .processSync(this.state.value).result
             }
-          </div>
+            </div>  
         </RightContent>
         <StyledFooter>Footer Content — Header.com 2020</StyledFooter>
       </StyledContainer>
@@ -220,20 +225,24 @@ export default class App extends Component {
 
 //   return (
 //     <div className="container-fluid w-75">
-//       <div className=" border-bottom mt-5  pb-5 mx-auto row d-flex align-items-center justify-content-center">
+//       <div className=" border-bottom mt-5  pb-5 mx-auto row d-flex
+//       align-items-center justify-content-center">
 //         <img width={200} src={markdown}></img>
 //         <h1 className="pb-2 ml-2">arkMeDown</h1>
 //       </div>
 
 //       <div className="border-bottom pb-5 w-auto">
 //         <div className="row mx-auto">
-//           <div className="mt-5 pb-5 d-flex row align-items-center justify-content-center">
+//           <div className="mt-5 pb-5 d-flex row align-items-center
+//           justify-content-center">
 //             <p className="mx-auto">
 //               Mark yourself down as a <b>markdown expert</b> with this
-//               interactive tutorial that guides you through the steps of building
+//               interactive tutorial that guides you through the steps of
+//               building
 //               a high-quality README.md for your next project!
 //             </p>
-//             <dl class="mt-5 d-flex col align-items-center justify-content-center">
+//             <dl class="mt-5 d-flex col align-items-center
+//             justify-content-center">
 //               <dt>Introduction</dt>
 //               <dd className="mx-auto">-</dd>
 //               <dt>Formatting</dt>
@@ -291,7 +300,8 @@ export default class App extends Component {
 //           }}
 //         />
 
-//         {/* <div className="d-flex align-items-center justify-content-center">
+//         {/* <div className="d-flex align-items-center
+//         justify-content-center">
 //           <button type="button" className="btn btn-primary w-50">
 //             Primary
 //           </button>
