@@ -33,7 +33,10 @@ const StyledFooter = styled.header`
   grid-column: 1 / 4;
 `;
 
-const Content = styled.div``;
+const Content = styled.div`
+
+border: 2px solid #1C6EA4;
+`;
 
 const LeftContent = styled(Content)`
   padding: 1rem;
@@ -42,14 +45,33 @@ const LeftContent = styled(Content)`
 `;
 
 const MiddleContent = styled(Content)`
-  background: red;
+  background: white;
+
   grid-column: 2 / 3;
+
+  display:flex;
+  flex-direction:column;
 `;
 
 const RightContent = styled(Content)`
-  background: grey;
+  background: white;
   grid-column: 3 / 4;
 `;
+
+const TopMiddleContent = styled.div`
+  border-bottom: 2px solid #1C6EA4;
+  height: 50px ;
+`;
+
+const EditorHeader = styled.p`
+  padding-left: 1.4rem;
+`;
+
+const BottomMiddleContent = styled.div`
+  flex:1;
+  background: red;
+`;
+
 
 // # My Example
 // this is my example MARKDOWN page
@@ -74,31 +96,100 @@ const RightContent = styled(Content)`
 // 1. This is a list
 // 2. Second list element
 
+// 
+// # Hello this is a header
+// 
+// Need file explorer on the left side for when images get added
+// 
+// 
 // ### Capture CTRL+s cause programmers love that
 
 // REMOVE HOME SCREEN, IT WILL JUST BE A POP UP ON THE WEBSITE BEFORE STARTING
 
 export default class App extends Component {
+  onLoad() {
+    console.log("i've loaded");
+  }
+
+  onChange(newValue) {
+    console.log("change", newValue);
+    this.setState({
+      value: newValue
+    });
+  }
+
+  onSelectionChange(newValue, event) {
+    console.log("select-change", newValue);
+    console.log("select-change-event", event);
+  }
+
+  onCursorChange(newValue, event) {
+    console.log("cursor-change", newValue);
+    console.log("cursor-change-event", event);
+  }
+
+  onValidate(annotations) {
+    console.log("onValidate", annotations);
+  }
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: ""
+    }
+
+    this.onChange = this.onChange.bind(this);
+    this.onLoad = this.onLoad.bind(this);
+    this.onSelectionChange = this.onSelectionChange.bind(this);
+    this.onCursorChange = this.onCursorChange.bind(this);
+    this.onValidate = this.onValidate.bind(this);
+  }
+
   render() {
     return (
       <StyledContainer>
         <StyledHeader>Header.com</StyledHeader>
         <LeftContent>Left contents</LeftContent>
         <MiddleContent>
+          <TopMiddleContent>
+            <EditorHeader>README.md</EditorHeader>
+          </TopMiddleContent>
+          <BottomMiddleContent>
           <AceEditor
+            placeholder={"Markdown text editor..."}
+            defaultValue={""}
+
+            // Editor fills container
+            height={"100%"}
+            width={"100%"}
+
+            name="my-editor"
             style={{
               lineHeight: "24px",
               fontFamily: "",
             }}
+
+            setOptions={{fontFamily: ""}}
+
             fontSize={24}
-            height={"100%"}
-            width={"100%"}
+            
+            showGutter={true}
             showPrintMargin={false}
+            highlightActiveLine={true}
+
+            wrapEnabled={true}
             mode="markdown"
             theme="textmate"
-            name="my-editor"
-            editorProps={{ $blockScrolling: true }}
+
+            onLoad={this.onLoad}
+            onChange={this.onChange}
+            onSelectionChange={this.onSelectionChange}
+            onCursorChange={this.onCursorChange}
+            onValidate={this.onValidate}
+            
+            editorProps={{ $blockScrolling: false }}
           />
+          </BottomMiddleContent>
         </MiddleContent>
         <RightContent>
           {/* FILE NEEDS A HEADER WITH README.md */}
@@ -107,7 +198,7 @@ export default class App extends Component {
               unified()
                 .use(parse)
                 .use(remark2react)
-                .processSync("# Hello World \n # Hello").result
+                .processSync(this.state.value).result
             }
           </div>
         </RightContent>
