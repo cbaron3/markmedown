@@ -1,5 +1,4 @@
-import React, { Component }
-from "react";
+import React, { Component } from "react";
 import styled from "styled-components";
 import "./App.css";
 
@@ -15,22 +14,13 @@ import unified from "unified";
 import parse from "remark-parse";
 import remark2react from "remark-react";
 
+import Header from "./components/Header/Header";
+
 const StyledContainer = styled.div `
   font-family: "Montserrat", sans-serif;
   display: grid;
   height: 100vh;
   grid-template: 50px 1fr 50px / 1fr 1fr 1fr;
-`;
-
-const StyledHeader = styled.header `
-  background: #494D5F;
-  color: white;
-  font-size: 30px;
-  font-weight: 600;
-  padding-top: 5px;
-  padding-left: 1.4rem;
-  text-align: left;
-  grid-column: 1 / 4;
 `;
 
 const StyledFooter = styled.header `
@@ -80,7 +70,7 @@ const RightContent = styled(Content) `
   display:flex;
   flex-direction:column;
 
-  overflow-y: scroll
+  overflow-y: scroll;
 `;
 
 const TopMiddleContent = styled.div `
@@ -166,7 +156,7 @@ export default class App extends Component {
   render() {
     return (
       <StyledContainer>
-        <StyledHeader>Markmedown ------------------------------------------------- Build your README</StyledHeader>
+        <Header></Header>
         <LeftContent>Introduction</LeftContent>
         <MiddleContent>
           <TopMiddleContent>
