@@ -1,5 +1,6 @@
 // TODO:
-//      1. Make title text responsive cause it dominates the header on small width screens
+//      1. Extract out components to their own files
+//      2. Make title text responsive cause it dominates the header on small width screens
 //      2. Have settings icon color, text color,
 //          and markdown logo color (icon-black, icon-white) be configured for dark and light mode
 //      3. Settings menu on settings icon
