@@ -1,3 +1,6 @@
+// TODO:
+// 1. To highlight specific parts of text, use dimmers perhaps? for like tutorial style popups?
+
 import React, { Component } from "react";
 import styled from "styled-components";
 import "./App.css";

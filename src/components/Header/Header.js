@@ -5,6 +5,7 @@
 //      2. Have settings icon color, text color,
 //          and markdown logo color (icon-black, icon-white) be configured for dark and light mode
 //      3. Settings menu on settings icon
+//        use semantic ui dropdown
 //      4. CSS clean up
 //      5. Create a global styles config for colors, fonts
 //      6. Remove magic numbers
