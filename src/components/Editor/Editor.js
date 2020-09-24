@@ -1,3 +1,3 @@
-import EditorNav from "./EditorNav";
-import EditorArea from "./EditorArea";
-import ImageViewer from "../imageViewer/ImageViewer";
+import EditorNav from "./NavBar";
+import EditorArea from "./TextArea";
+import ImageViewer from "../Viewers/ImageViewer";

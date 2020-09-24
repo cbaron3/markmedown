@@ -14,79 +14,64 @@ import unified from "unified";
 import parse from "remark-parse";
 import remark2react from "remark-react";
 
-import Header from "./components/Header/Header";
+import Header from "./Components/Header/Header";
+import Footer from "./Components/Footer/Footer";
 
-const StyledContainer = styled.div `
+const StyledContainer = styled.div`
   font-family: "Montserrat", sans-serif;
   display: grid;
   height: 100vh;
   grid-template: 50px 1fr 50px / 1fr 1fr 1fr;
 `;
 
-const StyledFooter = styled.header `
-  background: #494D5F;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  font-size: 13px;
-  font-weight: 300;
-  font-style: italic;
-  text-align: center;
-  grid-column: 1 / 4;
+const Content = styled.div`
+  border: 2px solid #1c6ea4;
 `;
 
-const Content = styled.div `
-
-border: 2px solid #1C6EA4;
-`;
-
-const LeftContent = styled(Content) `
-  
+const LeftContent = styled(Content)`
   background: white;
   grid-column: 1 / 2;
-  
+
   font-size: 32px;
   font-weight: 900;
   padding-top: 1.4rem;
   padding-left: 1.4rem;
 `;
 
-const MiddleContent = styled(Content) `
+const MiddleContent = styled(Content)`
   background: white;
 
   grid-column: 2 / 3;
 
-  display:flex;
-  flex-direction:column;
+  display: flex;
+  flex-direction: column;
 `;
 
-const RightContent = styled(Content) `
+const RightContent = styled(Content)`
   padding-left: 1.4rem;
 
   background: white;
   grid-column: 3 / 4;
 
-  display:flex;
-  flex-direction:column;
+  display: flex;
+  flex-direction: column;
 
   overflow-y: scroll;
 `;
 
-const TopMiddleContent = styled.div `
-  border-bottom: 2px solid #1C6EA4;
-  height: 50px ;
+const TopMiddleContent = styled.div`
+  border-bottom: 2px solid #1c6ea4;
+  height: 50px;
 `;
 
-const EditorHeader = styled.p `
+const EditorHeader = styled.p`
   padding-left: 1.4rem;
 `;
 
-const BottomMiddleContent = styled.div `
-  flex:1;
+const BottomMiddleContent = styled.div`
+  flex: 1;
   padding: -10px;
 `;
-
 
 // # My Example
 // this is my example MARKDOWN page
@@ -122,11 +107,13 @@ const BottomMiddleContent = styled.div `
 // REMOVE HOME SCREEN, IT WILL JUST BE A POP UP ON THE WEBSITE BEFORE STARTING
 
 export default class App extends Component {
-  onLoad() { console.log("i've loaded"); }
+  onLoad() {
+    console.log("i've loaded");
+  }
 
   onChange(newValue) {
     console.log("change", newValue);
-    this.setState({value: newValue});
+    this.setState({ value: newValue });
   }
 
   onSelectionChange(newValue, event) {
@@ -139,12 +126,13 @@ export default class App extends Component {
     console.log("cursor-change-event", event);
   }
 
-  onValidate(annotations) { console.log("onValidate", annotations); }
+  onValidate(annotations) {
+    console.log("onValidate", annotations);
+  }
 
   constructor(props) {
     super(props);
-    this.state =
-    { value: "" }
+    this.state = { value: "" };
 
     this.onChange = this.onChange.bind(this);
     this.onLoad = this.onLoad.bind(this);
@@ -163,51 +151,44 @@ export default class App extends Component {
             <EditorHeader>README.md</EditorHeader>
           </TopMiddleContent>
           <BottomMiddleContent>
-          <AceEditor
-            placeholder={"Markdown text editor..."}
-            defaultValue={""}
-            height={"100%"}
-            width={"100%"}
-
-            name="my-editor"
-            style={{
-              lineHeight: "24px",
-              fontFamily: "",
-            }}
-
-            setOptions={{fontFamily: ""}}
-
-            fontSize={24}
-            
-            showGutter={true}
-            showPrintMargin={false}
-            highlightActiveLine={true}
-
-            wrapEnabled={true}
-            mode="markdown"
-            theme="textmate"
-
-            onLoad={this.onLoad}
-            onChange={this.onChange}
-            onSelectionChange={this.onSelectionChange}
-            onCursorChange={this.onCursorChange}
-            onValidate={this.onValidate}
-            
-            editorProps={{ $blockScrolling: false }}
-          />
+            <AceEditor
+              placeholder={"Markdown text editor..."}
+              defaultValue={""}
+              height={"100%"}
+              width={"100%"}
+              name="my-editor"
+              style={{
+                lineHeight: "24px",
+                fontFamily: "",
+              }}
+              setOptions={{ fontFamily: "" }}
+              fontSize={24}
+              showGutter={true}
+              showPrintMargin={false}
+              highlightActiveLine={true}
+              wrapEnabled={true}
+              mode="markdown"
+              theme="textmate"
+              onLoad={this.onLoad}
+              onChange={this.onChange}
+              onSelectionChange={this.onSelectionChange}
+              onCursorChange={this.onCursorChange}
+              onValidate={this.onValidate}
+              editorProps={{ $blockScrolling: false }}
+            />
           </BottomMiddleContent>
         </MiddleContent>
         <RightContent>
-            <div>
+          <div>
             {
               unified()
                 .use(parse)
                 .use(remark2react)
                 .processSync(this.state.value).result
             }
-            </div>  
+          </div>
         </RightContent>
-        <StyledFooter>Made by Carl Baron</StyledFooter>
+        <Footer />
       </StyledContainer>
     );
   }
