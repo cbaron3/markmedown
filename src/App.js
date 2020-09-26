@@ -19,6 +19,7 @@ import remark2react from "remark-react";
 
 import Header from "./Components/Header/Header";
 import Footer from "./Components/Footer/Footer";
+import Prompt from "./Components/Prompt/Prompt";
 
 const StyledContainer = styled.div`
   font-family: "Montserrat", sans-serif;
@@ -28,7 +29,9 @@ const StyledContainer = styled.div`
 `;
 
 const Content = styled.div`
-  border: 2px solid #1c6ea4;
+  border-color: #1c6ea4;
+  border-style: solid;
+  border-width: 4px 2px 4px 2px;
 `;
 
 const LeftContent = styled(Content)`
@@ -63,8 +66,11 @@ const RightContent = styled(Content)`
 `;
 
 const TopMiddleContent = styled.div`
-  border-bottom: 2px solid #1c6ea4;
-  height: 50px;
+  border-color: #1c6ea4;
+  border-style: solid;
+  border-width: 0px 0px 4px 0px;
+
+  height: 30px;
 `;
 
 const EditorHeader = styled.p`
@@ -148,7 +154,9 @@ export default class App extends Component {
     return (
       <StyledContainer>
         <Header></Header>
-        <LeftContent>Introduction</LeftContent>
+
+        <Prompt></Prompt>
+
         <MiddleContent>
           <TopMiddleContent>
             <EditorHeader>README.md</EditorHeader>

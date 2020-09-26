@@ -34,6 +34,11 @@ export default class GithubLink extends Component {
           animation={github}
           size={iconSize}
           strokeColor={iconColor}
+          onClick={() => {
+            console.log("Github icon pushed");
+            const url = "https://github.com/cbaron3/markmedown.git";
+            window.open(url, "_blank");
+          }}
         />
         <Text>{text}</Text>
       </Container>

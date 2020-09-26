@@ -24,6 +24,7 @@ const Icon = styled.img`
 
 const HeaderText = styled.h1`
   font-size: 26px;
+  padding-bottom: 25px;
 `;
 
 export default class Logo extends Component {

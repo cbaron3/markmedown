@@ -10,9 +10,10 @@ import GithubLink from "./GithubLink";
 
 const Container = styled.header`
   background: #494d5f;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+
+  display: grid;
+  grid-template: 50px / 1fr 1fr 1fr;
+
   color: white;
   font-size: 13px;
   font-weight: 300;
