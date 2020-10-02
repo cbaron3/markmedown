@@ -7,6 +7,11 @@ import "./App.css";
 
 import AceEditor from "react-ace";
 
+import { Provider } from "react-redux";
+
+// Redux global data store
+import Store from "./State/Store";
+
 import "ace-builds/src-noconflict/mode-markdown";
 import "ace-builds/src-noconflict/theme-monokai";
 import "ace-builds/src-noconflict/theme-textmate";
@@ -20,6 +25,8 @@ import remark2react from "remark-react";
 import Header from "./Components/Header/Header";
 import Footer from "./Components/Footer/Footer";
 import Prompt from "./Components/Prompt/Prompt";
+import Editor from "./Components/Editor/Editor";
+import MarkdownViewer from "./Components/Viewers/MarkdownViewer";
 
 const StyledContainer = styled.div`
   font-family: "Montserrat", sans-serif;
@@ -152,55 +159,18 @@ export default class App extends Component {
 
   render() {
     return (
-      <StyledContainer>
-        <Header></Header>
+      <Provider store={Store}>
+        <StyledContainer>
+          <Header></Header>
 
-        <Prompt></Prompt>
+          <Prompt></Prompt>
 
-        <MiddleContent>
-          <TopMiddleContent>
-            <EditorHeader>README.md</EditorHeader>
-          </TopMiddleContent>
-          <BottomMiddleContent>
-            <AceEditor
-              placeholder={"Markdown text editor..."}
-              defaultValue={""}
-              height={"100%"}
-              width={"100%"}
-              name="my-editor"
-              style={{
-                lineHeight: "24px",
-                fontFamily: "",
-              }}
-              setOptions={{ fontFamily: "" }}
-              fontSize={24}
-              showGutter={true}
-              showPrintMargin={false}
-              highlightActiveLine={true}
-              wrapEnabled={true}
-              mode="markdown"
-              theme="textmate"
-              onLoad={this.onLoad}
-              onChange={this.onChange}
-              onSelectionChange={this.onSelectionChange}
-              onCursorChange={this.onCursorChange}
-              onValidate={this.onValidate}
-              editorProps={{ $blockScrolling: false }}
-            />
-          </BottomMiddleContent>
-        </MiddleContent>
-        <RightContent>
-          <div>
-            {
-              unified()
-                .use(parse)
-                .use(remark2react)
-                .processSync(this.state.value).result
-            }
-          </div>
-        </RightContent>
-        <Footer />
-      </StyledContainer>
+          <Editor />
+
+          <MarkdownViewer />
+          <Footer />
+        </StyledContainer>
+      </Provider>
     );
   }
 }

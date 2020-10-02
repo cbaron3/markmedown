@@ -17,6 +17,10 @@ import "ace-builds/src-noconflict/theme-textmate";
 import "ace-builds/src-noconflict/theme-dracula";
 import "ace-builds/src-noconflict/theme-nord_dark";
 
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { LESSONS } from "../../Lessons/";
+
 const number = "0";
 const header = "Introduction";
 
@@ -123,32 +127,37 @@ class OtherPreviewer extends Component {
   }
 }
 
-export default class Prompt extends Component {
+// Props required:
+// 1. Title
+// 2. Text
+// 3. List of requirements
+class Prompt extends Component {
+  // Needs to render LESSONS[index][TITLE], LESSONS[index][TEXT], LESSONS[index][REQUIREMENTS]
   render() {
     let headerExample = "# Example Header\nText\nHello";
     let listExample = "1. This element\n2. That Element \n\n\thello";
+
+    let myContents = [];
+    LESSONS[this.props.lessonIndex].text.forEach((t) => {
+      if (t.type === "REGULAR") {
+        myContents.push(<Paragraph>{t.contents}</Paragraph>);
+      } else if (t.type === "MD") {
+        myContents.push(<OtherPreviewer text={t.contents} />);
+      }
+    });
+
     return (
       <Container>
         <Instructions>
           <Label basic circular inverted color="black" size="medium">
-            #1
+            #{this.props.lessonIndex + 1}
           </Label>
           <Heading>{header}</Heading>
         </Instructions>
 
-        <Paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis eget
-          quam elit. Maecenas euismod lorem ut tortor bibendum interdum. Nunc
-          luctus dui eleifend elit sollicitudin eleifend ac eget magna. Praesent
-          venenatis urna ac nunc vulputate efficitur. Proin sed lorem sit amet
-          mauris viverra sodales vel sit amet nunc. Pellentesque finibus, nulla
-          quis elementum interdum, lectus urna auctor dolor, at pretium risus
-          enim eu urna. Etiam nec ex ac nulla ultrices tristique. Proin accumsan
-          suscipit mauris, eu fermentum turpis luctus at. Fusce vel venenatis
-          mauris. Sed ac pulvinar nunc.
-        </Paragraph>
+        {/* for element in text, if type is REGULAR, use paragraph. if type is MD, use markdown previewer*/}
 
-        <OtherPreviewer text={headerExample} />
+        {myContents}
 
         <Requirements>
           <Icon name={iconName} size={iconSize} />{" "}
@@ -158,3 +167,9 @@ export default class Prompt extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  lessonIndex: state.md.lessonIndex,
+});
+
+export default connect(mapStateToProps, null)(Prompt);

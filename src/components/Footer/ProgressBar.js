@@ -7,6 +7,11 @@ import skipForward from "react-useanimations/lib/skipForward";
 import skipBack from "react-useanimations/lib/skipBack";
 
 import { Progress } from "semantic-ui-react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+
+import { goToPreviousLesson, goToNextLesson } from "../../State/Actions";
+import { LESSONS } from "../../Lessons/";
 
 const iconSize = 26;
 const iconColor = "white";
@@ -51,7 +56,7 @@ const RightIcon = styled(IconContainer)`
   transform: rotate(180deg);
 `;
 
-export default class ProgressBar extends Component {
+class ProgressBar extends Component {
   constructor(props) {
     super(props);
 
@@ -68,13 +73,16 @@ export default class ProgressBar extends Component {
             animation={skipBack}
             size={iconSize}
             strokeColor={iconColor}
+            onClick={() => {
+              this.props.goToPreviousLesson();
+            }}
           />
         </LeftIcon>
 
         <TitleContainer>
           <Progress
-            value={progress.toString()}
-            total={total.toString()}
+            value={this.props.lessonIndex + 1}
+            total={LESSONS.length}
             progress="ratio"
             inverted
             color={barColor}
@@ -88,9 +96,33 @@ export default class ProgressBar extends Component {
             size={iconSize}
             strokeColor={iconColor}
             wrapperStyle={nextOpacity}
+            onClick={() => {
+              this.props.goToNextLesson();
+            }}
           />
         </RightIcon>
       </Container>
     );
   }
 }
+
+// ProgressBar.propTypes = {
+//   getRoutes: PropTypes.func.isRequired,
+//   setBoundsError: PropTypes.func.isRequired,
+//   loadRoutes: PropTypes.func.isRequired,
+//   resetContactForm: PropTypes.func.isRequired,
+//   setRouteError: PropTypes.func.isRequired,
+// };
+
+ProgressBar.propTypes = {
+  goToPreviousLesson: PropTypes.func.isRequired,
+  goToNextLesson: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  lessonIndex: state.md.lessonIndex,
+});
+
+export default connect(mapStateToProps, { goToPreviousLesson, goToNextLesson })(
+  ProgressBar
+);

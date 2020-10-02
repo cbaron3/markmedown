@@ -18,6 +18,9 @@ const Container = styled.div`
   padding-right: 1.4rem;
   padding-bottom: 9px;
   grid-column: 3 / 4;
+
+  width: auto;
+  height: auto;
 `;
 
 const Text = styled.span`
