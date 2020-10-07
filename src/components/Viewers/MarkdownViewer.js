@@ -26,6 +26,7 @@ const RightContent = styled(Content)`
   overflow-y: scroll;
 `;
 
+// Use this for when swappning between expected output and actual output
 class MarkdownViewer extends Component {
   constructor(props) {
     super(props);

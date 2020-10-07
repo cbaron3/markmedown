@@ -1,10 +1,3 @@
-// TODO: AFTER YOU HAVE COMPLETED A SECTION, TEXT AREA BECOMES READ-ONLY
-//  PROMPT APPEARS FIRST TIME YOU GO BACK THAT SAYS: WATCH OUT, PREVIOUS ELEMENTS CAN'T BE MODIFIED. JUST FOR REVIEW
-//  ADD LIKE A LOCK SYMBOL ON THE DIRECTORY HEADER
-//  ALSO A PROGRESSION NOTICE AT THE END OF THE REQUIREMENTS
-// * after completing this section, the editor will be put into read-only mode for lesson #1
-
-// THIS IS TO PREVENT VERSION CLASHES. AKA IF YOU GO BACK TO LESSON #1 AND THEN PROCEED TO LESSON #2, EDITS IN #1 WONT BE in #2
 import React, { Component } from "react";
 
 import styled from "styled-components";
@@ -13,6 +6,8 @@ import AceEditor from "react-ace";
 
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+
+import { Icon } from "semantic-ui-react";
 
 import "ace-builds/src-noconflict/mode-markdown";
 import "ace-builds/src-noconflict/theme-monokai";
@@ -37,27 +32,45 @@ const MiddleContent = styled(Content)`
   flex-direction: column;
 `;
 
+// Convert this into a grid of 4 elements
+// 1. directory icon
+// 2. spot for readme file
+// 3. spot for logo preview
+// 4. spot for project preview
 const TopMiddleContent = styled.div`
   border-color: #1c6ea4;
   border-style: solid;
   border-width: 0px 0px 4px 0px;
 
-  height: 30px;
-`;
-
-const EditorHeader = styled.p`
-  padding-left: 1.4rem;
+  display: grid;
+  grid-template: 30px / 30px 1fr;
 `;
 
 const BottomMiddleContent = styled.div`
   flex: 1;
   padding: -10px;
+  display: flex;
 `;
+
+const DirIcon = styled(Icon)`
+  grid-row: 1 / 2;
+`;
+
+const FileBar = styled.div`
+  background-color: yellow;
+
+  display: flex;
+
+  display: grid;
+  grid-template: 30px / 1fr 1fr 1fr;
+`;
+
+const File = styled.div``;
 
 class Editor extends Component {
   constructor(props) {
     super(props);
-    this.state = { value: "" };
+    this.state = { value: "", open: false };
 
     this.onChange = this.onChange.bind(this);
     this.onLoad = this.onLoad.bind(this);
@@ -91,14 +104,33 @@ class Editor extends Component {
     console.log("onValidate", annotations);
   }
 
-  // TODO: On back button, need to rerender the contents inside of the editor
   render() {
     return (
       <MiddleContent>
         <TopMiddleContent>
-          <EditorHeader>README.md</EditorHeader>
+          <DirIcon
+            name="folder"
+            onClick={(e) => {
+              this.setState((prevState) => ({ open: !prevState.open }));
+            }}
+          />
+          <FileBar>
+            <File style={{ backgroundColor: "red" }}>
+              <Icon name="close" />
+              <span>README</span>
+            </File>
+            <File style={{ backgroundColor: "blue" }}>
+              <Icon name="close" />
+              <span>README</span>
+            </File>
+            <File style={{ backgroundColor: "green" }}>
+              <Icon name="close" />
+              <span>README</span>
+            </File>
+          </FileBar>
         </TopMiddleContent>
         <BottomMiddleContent>
+          {this.state.open ? <div>DIRECTORY STRUCTURE</div> : null}
           <AceEditor
             key={this.props.lessonIndex}
             placeholder={"Markdown text editor..."}

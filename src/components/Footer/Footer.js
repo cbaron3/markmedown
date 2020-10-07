@@ -1,6 +1,3 @@
-// TODO:
-//      1. Create issue on react-useanimations to see if i can stop animation from playing
-//      2. Push this only to feature/footer
 import React, { Component } from "react";
 
 import styled from "styled-components";
@@ -22,7 +19,7 @@ const Container = styled.header`
   grid-column: 1 / 4;
 `;
 
-export default class Header extends Component {
+export default class Footer extends Component {
   render() {
     return (
       <Container>

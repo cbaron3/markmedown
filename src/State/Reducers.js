@@ -88,21 +88,18 @@ export default function (state = initialStore, action) {
       };
 
     case SETTINGS_MODIFIED:
-      // TODO: Update settings that are new?
       return {
         ...state,
         settings: action.payload,
       };
 
     case ACTIVE_FILE_CHANGED:
-      // TODO: validate file?
       return {
         ...state,
         activeFile: action.payload,
       };
 
     case MD_TEXT_MODIFIED:
-      // TODO: Push only text changes?
       let newEditorText = state.editorText;
       newEditorText[state.lessonIndex] = action.payload;
 

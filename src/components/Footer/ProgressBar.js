@@ -6,6 +6,8 @@ import UseAnimations from "react-useanimations";
 import skipForward from "react-useanimations/lib/skipForward";
 import skipBack from "react-useanimations/lib/skipBack";
 
+import { Button, Icon } from "semantic-ui-react";
+
 import { Progress } from "semantic-ui-react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
@@ -33,7 +35,7 @@ const TitleContainer = styled.div`
 
 const Container = styled.div`
   grid-column: 2 / 3;
-  grid-template: 50px / 25px 1fr 25px;
+  grid-template: 50px / 50px 1fr 50px;
   text-align: center;
   display: grid;
   overflow: hidden;
@@ -43,17 +45,21 @@ const Container = styled.div`
   align-items: center; */
 `;
 
-const IconContainer = styled.div``;
+const IconContainer = styled.div`
+  display: flex;
+  align-items: row;
+  justify-content: center;
+  height: 40px;
+  margin-top: 5px;
+`;
 
 const LeftIcon = styled(IconContainer)`
-  padding-top: 12.25px;
   grid-column: 1 / 2;
 `;
 
 const RightIcon = styled(IconContainer)`
-  padding-top: 12.25px;
   grid-column: 3 / 4;
-  transform: rotate(180deg);
+  opacity: 50%;
 `;
 
 class ProgressBar extends Component {
@@ -69,14 +75,15 @@ class ProgressBar extends Component {
     return (
       <Container>
         <LeftIcon>
-          <UseAnimations
-            animation={skipBack}
-            size={iconSize}
-            strokeColor={iconColor}
+          <Button
+            inverted
+            icon
             onClick={() => {
               this.props.goToPreviousLesson();
             }}
-          />
+          >
+            <Icon name="left arrow" />
+          </Button>
         </LeftIcon>
 
         <TitleContainer>
@@ -90,16 +97,24 @@ class ProgressBar extends Component {
           />
         </TitleContainer>
 
-        <RightIcon>
-          <UseAnimations
-            animation={skipBack}
-            size={iconSize}
-            strokeColor={iconColor}
-            wrapperStyle={nextOpacity}
-            onClick={() => {
-              this.props.goToNextLesson();
+        <RightIcon
+          style={
+            this.props.reqsMet === true
+              ? { opacity: "100%" }
+              : { opacity: "50%" }
+          }
+        >
+          <Button
+            icon
+            inverted
+            onClick={(e) => {
+              if (this.props.reqsMet === true) {
+                this.props.goToNextLesson();
+              }
             }}
-          />
+          >
+            <Icon name="right arrow" />
+          </Button>
         </RightIcon>
       </Container>
     );
@@ -121,6 +136,7 @@ ProgressBar.propTypes = {
 
 const mapStateToProps = (state) => ({
   lessonIndex: state.md.lessonIndex,
+  reqsMet: state.md.reqsMet,
 });
 
 export default connect(mapStateToProps, { goToPreviousLesson, goToNextLesson })(

@@ -11,6 +11,11 @@ import AceEditor from "react-ace";
 
 import { Icon, Label } from "semantic-ui-react";
 
+import UseAnimations from "react-useanimations";
+import checkBox from "react-useanimations/lib/checkBox";
+
+import { lessonReqsMet, lessonReqsNotMet } from "../../State/Actions";
+
 import "ace-builds/src-noconflict/mode-markdown";
 import "ace-builds/src-noconflict/theme-monokai";
 import "ace-builds/src-noconflict/theme-textmate";
@@ -78,6 +83,10 @@ const Requirements = styled(Instructions)`
   border-top: 2px solid black;
 `;
 
+const RequirementsList = styled.div`
+  margin-top: 10px;
+`;
+
 const StyledIcon = styled(Icon)`
   font-family: "Montserrat", sans-serif;
 `;
@@ -95,7 +104,7 @@ class PreviewSnippet extends Component {
 class OtherPreviewer extends Component {
   render() {
     return (
-      <MDPreviewer className="noselection">
+      <MDPreviewer className="noselection" key={this.props.text}>
         <AceEditor
           defaultValue={this.props.text}
           maxLines={this.props.text.split(/\r\n|\r|\n/).length}
@@ -142,9 +151,40 @@ class Prompt extends Component {
       if (t.type === "REGULAR") {
         myContents.push(<Paragraph>{t.contents}</Paragraph>);
       } else if (t.type === "MD") {
+        console.log(t.contents);
         myContents.push(<OtherPreviewer text={t.contents} />);
       }
     });
+
+    // TODO: Track if each element is met. If yes, set requirements met to true with action
+    let myRequirements = [];
+    let reqsMet = true;
+    LESSONS[this.props.lessonIndex].requirements.forEach((t) => {
+      // If verifier returns true with text in the editor, then add CHECK to the name
+      let name = "circle outline";
+      let color = "red";
+
+      if (t.verifier(this.props.activeText.value)) {
+        name = "circle outline check";
+        color = "green";
+      } else {
+        reqsMet = false;
+      }
+
+      let content = (
+        <div>
+          <Icon color={color} inverted name={name} size={iconSize} />
+          <span>{t.instruction}</span>
+        </div>
+      );
+      myRequirements.push(content);
+    });
+
+    if (reqsMet === true) {
+      this.props.lessonReqsMet();
+    } else {
+      this.props.lessonReqsNotMet();
+    }
 
     return (
       <Container>
@@ -152,7 +192,7 @@ class Prompt extends Component {
           <Label basic circular inverted color="black" size="medium">
             #{this.props.lessonIndex + 1}
           </Label>
-          <Heading>{header}</Heading>
+          <Heading>{LESSONS[this.props.lessonIndex].title}</Heading>
         </Instructions>
 
         {/* for element in text, if type is REGULAR, use paragraph. if type is MD, use markdown previewer*/}
@@ -163,6 +203,8 @@ class Prompt extends Component {
           <Icon name={iconName} size={iconSize} />{" "}
           <Heading>Requirements</Heading>
         </Requirements>
+
+        <RequirementsList>{myRequirements}</RequirementsList>
       </Container>
     );
   }
@@ -170,6 +212,9 @@ class Prompt extends Component {
 
 const mapStateToProps = (state) => ({
   lessonIndex: state.md.lessonIndex,
+  activeText: state.md.activeText,
 });
 
-export default connect(mapStateToProps, null)(Prompt);
+export default connect(mapStateToProps, { lessonReqsMet, lessonReqsNotMet })(
+  Prompt
+);
