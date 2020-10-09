@@ -5,9 +5,9 @@ import {
   PROGRESS_FORWARD_BTN_CLICKED,
   MD_REQS_MET,
   MD_REQS_NOT_MET,
-  SETTINGS_MODIFIED,
   ACTIVE_FILE_CHANGED,
   MD_TEXT_MODIFIED,
+  THEME_MODIFIED,
 } from "./Actions";
 
 const initialStore = {
@@ -21,8 +21,9 @@ const initialStore = {
   settings: {
     color: "",
     font: "",
-    theme: "",
+    theme: "textmate",
   },
+  theme: "nord_dark",
   activeFile: "",
 };
 
@@ -87,10 +88,12 @@ export default function (state = initialStore, action) {
         reqsMet: false,
       };
 
-    case SETTINGS_MODIFIED:
+    case THEME_MODIFIED:
+
+
       return {
         ...state,
-        settings: action.payload,
+        theme: action.payload,
       };
 
     case ACTIVE_FILE_CHANGED:

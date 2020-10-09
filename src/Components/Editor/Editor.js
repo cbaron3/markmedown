@@ -10,6 +10,45 @@ import PropTypes from "prop-types";
 import { Icon } from "semantic-ui-react";
 
 import "ace-builds/src-noconflict/mode-markdown";
+
+import "ace-builds/src-noconflict/theme-chaos";
+import "ace-builds/src-noconflict/theme-ambiance";
+import "ace-builds/src-noconflict/theme-chrome";
+import "ace-builds/src-noconflict/theme-clouds";
+import "ace-builds/src-noconflict/theme-clouds_midnight";
+import "ace-builds/src-noconflict/theme-cobalt";
+import "ace-builds/src-noconflict/theme-crimson_editor";
+import "ace-builds/src-noconflict/theme-dawn";
+import "ace-builds/src-noconflict/theme-dracula";
+import "ace-builds/src-noconflict/theme-dreamweaver";
+import "ace-builds/src-noconflict/theme-eclipse";
+import "ace-builds/src-noconflict/theme-github";
+import "ace-builds/src-noconflict/theme-gob";
+import "ace-builds/src-noconflict/theme-gruvbox";
+import "ace-builds/src-noconflict/theme-idle_fingers";
+import "ace-builds/src-noconflict/theme-iplastic";
+import "ace-builds/src-noconflict/theme-katzenmilch";
+import "ace-builds/src-noconflict/theme-kr_theme";
+import "ace-builds/src-noconflict/theme-kuroir";
+import "ace-builds/src-noconflict/theme-merbivore";
+import "ace-builds/src-noconflict/theme-merbivore_soft";
+import "ace-builds/src-noconflict/theme-monokai";
+import "ace-builds/src-noconflict/theme-mono_industrial";
+import "ace-builds/src-noconflict/theme-nord_dark";
+import "ace-builds/src-noconflict/theme-pastel_on_dark";
+import "ace-builds/src-noconflict/theme-solarized_dark";
+import "ace-builds/src-noconflict/theme-solarized_light";
+import "ace-builds/src-noconflict/theme-sqlserver";
+import "ace-builds/src-noconflict/theme-terminal";
+import "ace-builds/src-noconflict/theme-textmate";
+import "ace-builds/src-noconflict/theme-tomorrow";
+import "ace-builds/src-noconflict/theme-tomorrow_night";
+import "ace-builds/src-noconflict/theme-tomorrow_night_blue";
+import "ace-builds/src-noconflict/theme-tomorrow_night_bright";
+import "ace-builds/src-noconflict/theme-tomorrow_night_eighties";
+import "ace-builds/src-noconflict/theme-twilight";
+import "ace-builds/src-noconflict/theme-vibrant_ink";
+import "ace-builds/src-noconflict/theme-xcode";
 import "ace-builds/src-noconflict/theme-monokai";
 import "ace-builds/src-noconflict/theme-textmate";
 import "ace-builds/src-noconflict/theme-dracula";
@@ -17,11 +56,7 @@ import "ace-builds/src-noconflict/theme-nord_dark";
 
 import { mdTextModified } from "../../State/Actions";
 
-const Content = styled.div`
-  border-color: #1c6ea4;
-  border-style: solid;
-  border-width: 4px 2px 4px 2px;
-`;
+const Content = styled.div``;
 
 const MiddleContent = styled(Content)`
   background: white;
@@ -38,12 +73,10 @@ const MiddleContent = styled(Content)`
 // 3. spot for logo preview
 // 4. spot for project preview
 const TopMiddleContent = styled.div`
-  border-color: #1c6ea4;
-  border-style: solid;
-  border-width: 0px 0px 4px 0px;
+  background-color: #494d5f;
 
   display: grid;
-  grid-template: 30px / 30px 1fr;
+  grid-template: 30px / 45px 1fr;
 `;
 
 const BottomMiddleContent = styled.div`
@@ -57,20 +90,22 @@ const DirIcon = styled(Icon)`
 `;
 
 const FileBar = styled.div`
-  background-color: yellow;
-
+  background-color: #494d5f;
   display: flex;
 
   display: grid;
   grid-template: 30px / 1fr 1fr 1fr;
 `;
 
-const File = styled.div``;
+const File = styled.div`
+  /* background-color: #969aab; */
+  background-color: white;
+`;
 
 class Editor extends Component {
   constructor(props) {
     super(props);
-    this.state = { value: "", open: false };
+    this.state = { value: "", open: false, folder: "folder outline" };
 
     this.onChange = this.onChange.bind(this);
     this.onLoad = this.onLoad.bind(this);
@@ -109,53 +144,66 @@ class Editor extends Component {
       <MiddleContent>
         <TopMiddleContent>
           <DirIcon
-            name="folder"
+            name={this.state.folder}
+            color="white"
+            inverted
             onClick={(e) => {
               this.setState((prevState) => ({ open: !prevState.open }));
+
+              if (this.state.folder === "folder outline") {
+                this.setState((prevState) => ({
+                  folder: "folder open outline",
+                }));
+              } else {
+                this.setState((prevState) => ({
+                  folder: "folder outline",
+                }));
+              }
             }}
           />
           <FileBar>
-            <File style={{ backgroundColor: "red" }}>
+            <File>
               <Icon name="close" />
               <span>README</span>
             </File>
-            <File style={{ backgroundColor: "blue" }}>
+            {/* <File>
               <Icon name="close" />
               <span>README</span>
-            </File>
-            <File style={{ backgroundColor: "green" }}>
+            </File> */}
+            {/* <File>
               <Icon name="close" />
               <span>README</span>
-            </File>
+            </File> */}
           </FileBar>
         </TopMiddleContent>
         <BottomMiddleContent>
           {this.state.open ? <div>DIRECTORY STRUCTURE</div> : null}
           <AceEditor
             key={this.props.lessonIndex}
-            placeholder={"Markdown text editor..."}
+            placeholder={""}
             defaultValue={this.props.activeText.value}
             height={"100%"}
             width={"100%"}
             name="my-editor"
-            style={{
-              lineHeight: "24px",
-              fontFamily: "",
-            }}
-            setOptions={{ fontFamily: "" }}
+            cursorStart={-1}
+            // style={{
+            //   lineHeight: "24px",
+            //   fontFamily: "",
+            // }}
+            setOptions={{ fontFamily: "", highlightGutterLine: false, cursorStyle: "slim"}}
             fontSize={24}
             showGutter={true}
             showPrintMargin={false}
-            highlightActiveLine={true}
+            highlightActiveLine={false}
             wrapEnabled={true}
             mode="markdown"
-            theme="textmate"
+            theme={this.props.theme}
             onLoad={this.onLoad}
             onChange={this.onChange}
             onSelectionChange={this.onSelectionChange}
             onCursorChange={this.onCursorChange}
             onValidate={this.onValidate}
-            editorProps={{ $blockScrolling: false }}
+            editorProps={{ $blockScrolling: false}}
           />
         </BottomMiddleContent>
       </MiddleContent>
@@ -168,6 +216,7 @@ const mapStateToProps = (state) => ({
   lessonIndex: state.md.lessonIndex,
   editorText: state.md.editorText,
   previousText: state.md.previousText,
+  theme: state.md.theme
 });
 
 export default connect(mapStateToProps, { mdTextModified })(Editor);

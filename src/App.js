@@ -32,11 +32,7 @@ const StyledContainer = styled.div`
   grid-template: 50px 1fr 50px / 1fr 1fr 1fr;
 `;
 
-const Content = styled.div`
-  border-color: #1c6ea4;
-  border-style: solid;
-  border-width: 4px 2px 4px 2px;
-`;
+const Content = styled.div``;
 
 // # My Example
 // this is my example MARKDOWN page

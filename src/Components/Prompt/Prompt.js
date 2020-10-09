@@ -42,10 +42,6 @@ const Container = styled.div`
   padding-left: 1.4rem;
   padding-right: 1.4rem;
 
-  border-color: #1c6ea4;
-  border-style: solid;
-  border-width: 4px 2px 4px 4px;
-
   width: 33.33333333333vw;
 
   overflow-y: auto;

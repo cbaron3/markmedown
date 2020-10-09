@@ -8,11 +8,7 @@ import remark2react from "remark-react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
-const Content = styled.div`
-  border-color: #1c6ea4;
-  border-style: solid;
-  border-width: 4px 2px 4px 2px;
-`;
+const Content = styled.div``;
 
 const RightContent = styled(Content)`
   padding-left: 1.4rem;

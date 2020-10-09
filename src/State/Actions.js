@@ -12,8 +12,8 @@ export const MD_REQS_MET = "MD_REQS_MET";
 // Text in markdown code editor does not satisfy requirements, make forward button inactive
 export const MD_REQS_NOT_MET = "MD_REQS_NOT_MET";
 
-// Settings have been changed
-export const SETTINGS_MODIFIED = "SETTINGS_MODIFIED";
+// Theme has been changed
+export const THEME_MODIFIED = "THEME_MODIFIED";
 
 // The active file in the editor has changed
 export const ACTIVE_FILE_CHANGED = "ACTIVE_FILE_CHANGED";
@@ -49,10 +49,10 @@ export const lessonReqsNotMet = () => (dispatch) => {
   });
 };
 
-export const settingsModified = (data) => (dispatch) => {
+export const themeModified = (data) => (dispatch) => {
   // Dispatch a settings modified message with the new setting state as the payload
   dispatch({
-    type: SETTINGS_MODIFIED,
+    type: THEME_MODIFIED,
     payload: data,
   });
 };
