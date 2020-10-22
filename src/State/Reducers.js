@@ -1,4 +1,4 @@
-import { LESSONS } from "../Lessons/";
+import { LESSONS } from "../Lessons/Content";
 // Evaluate any actions that were submitted
 import {
   PROGRESS_BACK_BTN_CLICKED,

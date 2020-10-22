@@ -24,7 +24,7 @@ import "ace-builds/src-noconflict/theme-nord_dark";
 
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { LESSONS } from "../../Lessons/";
+import { LESSONS } from "../../Lessons/Content";
 
 const number = "0";
 const header = "Introduction";

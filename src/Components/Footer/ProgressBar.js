@@ -13,7 +13,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 import { goToPreviousLesson, goToNextLesson } from "../../State/Actions";
-import { LESSONS } from "../../Lessons/";
+import { LESSONS } from "../../Lessons/Content";
 
 const iconSize = 26;
 const iconColor = "white";

@@ -1,4 +1,4 @@
-import { textRegex, h1Regex } from "../Utility/mdValidator";
+import { textRegex, h1Regex } from "../../Utility/mdValidator";
 
 export const headers = {
   title: "Headers",

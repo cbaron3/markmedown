@@ -7,7 +7,7 @@ import AceEditor from "react-ace";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
-import { Icon } from "semantic-ui-react";
+import { Icon, List } from "semantic-ui-react";
 
 import "ace-builds/src-noconflict/mode-markdown";
 
@@ -102,10 +102,22 @@ const File = styled.div`
   background-color: white;
 `;
 
+const Directory = styled.div`
+  background-color: #494d5f;
+
+  width: 200px;
+`;
+
 class Editor extends Component {
   constructor(props) {
     super(props);
-    this.state = { value: "", open: false, folder: "folder outline" };
+    this.state = {
+      value: "",
+      open: false,
+      folder: "folder outline",
+      fileFolder: "folder open outline",
+      files: [null, null, null],
+    };
 
     this.onChange = this.onChange.bind(this);
     this.onLoad = this.onLoad.bind(this);
@@ -162,10 +174,11 @@ class Editor extends Component {
             }}
           />
           <FileBar>
-            <File>
+            {this.state.files}
+            {/* <File>
               <Icon name="close" />
               <span>README</span>
-            </File>
+            </File> */}
             {/* <File>
               <Icon name="close" />
               <span>README</span>
@@ -177,7 +190,101 @@ class Editor extends Component {
           </FileBar>
         </TopMiddleContent>
         <BottomMiddleContent>
-          {this.state.open ? <div>DIRECTORY STRUCTURE</div> : null}
+          {this.state.open ? (
+            <Directory>
+              <List>
+                <List.Item>
+                  <List.Icon name="folder" />
+                  <List.Content>
+                    <List.Header>files</List.Header>
+                    <List.List>
+                      <List.Item
+                        style={{ color: "white" }}
+                        onClick={(e) => {
+                          let newFiles = this.state.files;
+
+                          if (newFiles[0] === null) {
+                            newFiles[0] = (
+                              <File>
+                                <Icon name="close" />
+                                <span>README.md</span>
+                              </File>
+                            );
+                          }
+                          // TODO: Check if already exists
+                          this.setState((prevState) => ({
+                            files: newFiles,
+                          }));
+                        }}
+                      >
+                        <List.Icon name="file" />
+                        <List.Content>
+                          <List.Header style={{ color: "white" }}>
+                            README.md
+                          </List.Header>
+                          <List.Description></List.Description>
+                        </List.Content>
+                      </List.Item>
+                      <List.Item
+                        style={{ color: "white" }}
+                        onClick={(e) => {
+                          let newFiles = this.state.files;
+
+                          if (newFiles[1] === null) {
+                            newFiles[1] = (
+                              <File>
+                                <Icon name="close" />
+                                <span>logo.png</span>
+                              </File>
+                            );
+                          }
+                          // TODO: Check if already exists
+                          this.setState((prevState) => ({
+                            files: newFiles,
+                          }));
+                        }}
+                      >
+                        <List.Icon name="file" />
+                        <List.Content>
+                          <List.Header style={{ color: "white" }}>
+                            logo.png
+                          </List.Header>
+                          <List.Description></List.Description>
+                        </List.Content>
+                      </List.Item>
+                      <List.Item
+                        style={{ color: "white" }}
+                        onClick={(e) => {
+                          let newFiles = this.state.files;
+
+                          if (newFiles[2] === null) {
+                            newFiles[2] = (
+                              <File>
+                                <Icon name="close" />
+                                <span>example.png</span>
+                              </File>
+                            );
+                          }
+                          // TODO: Check if already exists
+                          this.setState((prevState) => ({
+                            files: newFiles,
+                          }));
+                        }}
+                      >
+                        <List.Icon name="file" />
+                        <List.Content>
+                          <List.Header style={{ color: "white" }}>
+                            example.png
+                          </List.Header>
+                          <List.Description></List.Description>
+                        </List.Content>
+                      </List.Item>
+                    </List.List>
+                  </List.Content>
+                </List.Item>
+              </List>
+            </Directory>
+          ) : null}
           <AceEditor
             key={this.props.lessonIndex}
             placeholder={""}
@@ -190,7 +297,11 @@ class Editor extends Component {
             //   lineHeight: "24px",
             //   fontFamily: "",
             // }}
-            setOptions={{ fontFamily: "", highlightGutterLine: false, cursorStyle: "slim"}}
+            setOptions={{
+              fontFamily: "",
+              highlightGutterLine: false,
+              cursorStyle: "slim",
+            }}
             fontSize={24}
             showGutter={true}
             showPrintMargin={false}
@@ -203,7 +314,7 @@ class Editor extends Component {
             onSelectionChange={this.onSelectionChange}
             onCursorChange={this.onCursorChange}
             onValidate={this.onValidate}
-            editorProps={{ $blockScrolling: false}}
+            editorProps={{ $blockScrolling: false }}
           />
         </BottomMiddleContent>
       </MiddleContent>
@@ -216,7 +327,7 @@ const mapStateToProps = (state) => ({
   lessonIndex: state.md.lessonIndex,
   editorText: state.md.editorText,
   previousText: state.md.previousText,
-  theme: state.md.theme
+  theme: state.md.theme,
 });
 
 export default connect(mapStateToProps, { mdTextModified })(Editor);

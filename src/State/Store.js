@@ -1,7 +1,7 @@
 // Redux store that stores global app state
 import { createStore, applyMiddleware, compose } from "redux";
 
-import LESSONS from "../Lessons/";
+import LESSONS from "../Lessons/Content";
 
 import thunk from "redux-thunk";
 
